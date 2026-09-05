@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mẫu DDEX ERN 3.8.2 đầy đủ vai trò contributor — dùng để test SFTP ingestion.
+     Đối tác đặt file này + file audio (tên khớp FileName) vào thư mục incoming/
+     của dropbox SFTP. Watcher khớp role: DisplayArtist→MainArtist/FeaturedArtist,
+     ResourceContributor→Producer/Mixer/…, IndirectResourceContributor→Composer/Lyricist/… -->
+<ern:NewReleaseMessage xmlns:ern="http://ddex.net/xml/ern/382" MessageSchemaVersionId="ern/382">
+  <MessageHeader>
+    <MessageId>MSG-ANS-SFTP-SAMPLE-001</MessageId>
+    <MessageSender>
+      <PartyId>PADPIDA2026DEMO01</PartyId>
+      <PartyName><FullName>Demo Distribution</FullName></PartyName>
+    </MessageSender>
+    <MessageRecipient><PartyId>PADPIDA_ANS_MUSIC</PartyId></MessageRecipient>
+    <MessageCreatedDateTime>2026-07-10T09:00:00Z</MessageCreatedDateTime>
+  </MessageHeader>
+  <ResourceList>
+    <SoundRecording>
+      <ResourceReference>A1</ResourceReference>
+      <SoundRecordingId><ISRC>VNA0D2600801</ISRC></SoundRecordingId>
+      <ReferenceTitle><TitleText>Giấc Mơ Đêm Hè</TitleText></ReferenceTitle>
+      <Duration>PT3M42S</Duration>
+      <DisplayArtist><PartyName><FullName>Thảo My</FullName></PartyName><ArtistRole>MainArtist</ArtistRole></DisplayArtist>
+      <DisplayArtist><PartyName><FullName>Minh Triết</FullName></PartyName><ArtistRole>FeaturedArtist</ArtistRole></DisplayArtist>
+      <ResourceContributor><PartyName><FullName>Lê Quang Producer</FullName></PartyName><ResourceContributorRole>Producer</ResourceContributorRole></ResourceContributor>
+      <ResourceContributor><PartyName><FullName>Trần Mix</FullName></PartyName><ResourceContributorRole>MixingEngineer</ResourceContributorRole></ResourceContributor>
+      <IndirectResourceContributor><PartyName><FullName>Phạm Nhạc Sĩ</FullName></PartyName><IndirectResourceContributorRole>Composer</IndirectResourceContributorRole></IndirectResourceContributor>
+      <IndirectResourceContributor><PartyName><FullName>Nguyễn Lời</FullName></PartyName><IndirectResourceContributorRole>Lyricist</IndirectResourceContributorRole></IndirectResourceContributor>
+      <IndirectResourceContributor><PartyName><FullName>ANS Publishing</FullName></PartyName><IndirectResourceContributorRole>MusicPublisher</IndirectResourceContributorRole></IndirectResourceContributor>
+      <GenreText>Pop</GenreText>
+      <ParentalWarningType>NotExplicit</ParentalWarningType>
+      <PLineText>2026 Demo Distribution</PLineText>
+      <TechnicalSoundRecordingDetails>
+        <TechnicalResourceDetailsReference>T1</TechnicalResourceDetailsReference>
+        <File><FileName>giac_mo_dem_he.wav</FileName></File>
+      </TechnicalSoundRecordingDetails>
+    </SoundRecording>
+  </ResourceList>
+  <ReleaseList>
+    <Release>
+      <ReleaseId><ICPN>8809876500018</ICPN></ReleaseId>
+      <ReferenceTitle><TitleText>Giấc Mơ Đêm Hè</TitleText></ReferenceTitle>
+      <ReleaseType>Single</ReleaseType>
+      <LabelName>Demo Records</LabelName>
+      <GenreText>Pop</GenreText>
+      <PLineText>2026 Demo Distribution</PLineText>
+      <CLineText>2026 Demo Distribution</CLineText>
+      <ReleaseResourceReferenceList>
+        <ReleaseResourceReference>A1</ReleaseResourceReference>
+      </ReleaseResourceReferenceList>
+    </Release>
+  </ReleaseList>
+  <DealList>
+    <ReleaseDeal>
+      <DealReleaseReference>A1</DealReleaseReference>
+      <Deal>
+        <DealTerms>
+          <CommercialModelType>SubscriptionModel</CommercialModelType>
+          <Usage><UseType>OnDemandStream</UseType></Usage>
+          <TerritoryCode>Worldwide</TerritoryCode>
+          <ValidityPeriod><StartDate>2026-07-15</StartDate></ValidityPeriod>
+        </DealTerms>
+      </Deal>
+    </ReleaseDeal>
+  </DealList>
+</ern:NewReleaseMessage>

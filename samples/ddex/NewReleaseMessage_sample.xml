@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gói DDEX ERN 3.8.2 mẫu — dùng để test import trong Admin CMS (mục DDEX Ingestion) -->
+<ern:NewReleaseMessage xmlns:ern="http://ddex.net/xml/ern/382"
+    MessageSchemaVersionId="ern/382" LanguageAndScriptCode="vi">
+  <MessageHeader>
+    <MessageThreadId>MT-2026-000777</MessageThreadId>
+    <MessageId>MSG-2026-000777</MessageId>
+    <MessageSender>
+      <PartyId>PADPIDA2026MEKONG01</PartyId>
+      <PartyName><FullName>Mekong Digital Distribution</FullName></PartyName>
+    </MessageSender>
+    <MessageRecipient>
+      <PartyId>PADPIDA2026ANSMUSIC</PartyId>
+      <PartyName><FullName>ANS Music</FullName></PartyName>
+    </MessageRecipient>
+    <MessageCreatedDateTime>2026-07-09T10:30:00Z</MessageCreatedDateTime>
+  </MessageHeader>
+
+  <ResourceList>
+    <SoundRecording>
+      <SoundRecordingType>MusicalWorkSoundRecording</SoundRecordingType>
+      <SoundRecordingId><ISRC>VNA0D2690001</ISRC></SoundRecordingId>
+      <ResourceReference>A1</ResourceReference>
+      <ReferenceTitle><TitleText>Sóng Về Đâu</TitleText></ReferenceTitle>
+      <Duration>PT3M45S</Duration>
+      <SoundRecordingDetailsByTerritory>
+        <TerritoryCode>Worldwide</TerritoryCode>
+        <DisplayArtist>
+          <PartyName><FullName>Triều Dâng</FullName></PartyName>
+          <ArtistRole>MainArtist</ArtistRole>
+        </DisplayArtist>
+        <PLine><Year>2026</Year><PLineText>℗ 2026 Mekong Records</PLineText></PLine>
+        <GenreText>V-Pop</GenreText>
+        <ParentalWarningType>NotExplicit</ParentalWarningType>
+      </SoundRecordingDetailsByTerritory>
+    </SoundRecording>
+
+    <SoundRecording>
+      <SoundRecordingType>MusicalWorkSoundRecording</SoundRecordingType>
+      <SoundRecordingId><ISRC>VNA0D2690002</ISRC></SoundRecordingId>
+      <ResourceReference>A2</ResourceReference>
+      <ReferenceTitle><TitleText>Bến Nước Chiều</TitleText></ReferenceTitle>
+      <Duration>PT4M02S</Duration>
+      <SoundRecordingDetailsByTerritory>
+        <TerritoryCode>Worldwide</TerritoryCode>
+        <DisplayArtist>
+          <PartyName><FullName>Triều Dâng</FullName></PartyName>
+          <ArtistRole>MainArtist</ArtistRole>
+        </DisplayArtist>
+        <DisplayArtist>
+          <PartyName><FullName>Hà Phương Linh</FullName></PartyName>
+          <ArtistRole>FeaturedArtist</ArtistRole>
+        </DisplayArtist>
+        <PLine><Year>2026</Year><PLineText>℗ 2026 Mekong Records</PLineText></PLine>
+        <GenreText>V-Pop</GenreText>
+        <ParentalWarningType>NotExplicit</ParentalWarningType>
+      </SoundRecordingDetailsByTerritory>
+    </SoundRecording>
+
+    <Image>
+      <ImageType>FrontCoverImage</ImageType>
+      <ImageId><ProprietaryId Namespace="DPID:PADPIDA2026MEKONG01">IMG777</ProprietaryId></ImageId>
+      <ResourceReference>A3</ResourceReference>
+    </Image>
+  </ResourceList>
+
+  <ReleaseList>
+    <Release IsMainRelease="true">
+      <ReleaseId><ICPN IsEan="false">893001260012</ICPN></ReleaseId>
+      <ReferenceTitle><TitleText>Sóng Về Đâu</TitleText></ReferenceTitle>
+      <ReleaseResourceReferenceList>
+        <ReleaseResourceReference ReleaseResourceType="PrimaryResource">A1</ReleaseResourceReference>
+        <ReleaseResourceReference ReleaseResourceType="PrimaryResource">A2</ReleaseResourceReference>
+        <ReleaseResourceReference ReleaseResourceType="SecondaryResource">A3</ReleaseResourceReference>
+      </ReleaseResourceReferenceList>
+      <ReleaseType>Single</ReleaseType>
+      <ReleaseDetailsByTerritory>
+        <TerritoryCode>Worldwide</TerritoryCode>
+        <DisplayArtistName>Triều Dâng</DisplayArtistName>
+        <LabelName>Mekong Records</LabelName>
+        <GenreText>V-Pop</GenreText>
+      </ReleaseDetailsByTerritory>
+    </Release>
+  </ReleaseList>
+
+  <DealList>
+    <ReleaseDeal>
+      <DealReleaseReference>R0</DealReleaseReference>
+      <Deal><DealTerms>
+        <CommercialModelType>SubscriptionModel</CommercialModelType>
+        <Usage><UseType>OnDemandStream</UseType></Usage>
+        <TerritoryCode>Worldwide</TerritoryCode>
+        <ValidityPeriod><StartDate>2026-08-01</StartDate></ValidityPeriod>
+      </DealTerms></Deal>
+    </ReleaseDeal>
+  </DealList>
+</ern:NewReleaseMessage>

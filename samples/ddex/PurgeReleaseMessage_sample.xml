@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Takedown mẫu (ERN 4.3 PurgeReleaseMessage) — gỡ release đã import từ NewReleaseMessage_sample.xml -->
+<ern:PurgeReleaseMessage xmlns:ern="http://ddex.net/xml/ern/43"
+    MessageSchemaVersionId="ern/43">
+  <MessageHeader>
+    <MessageId>MSG-2026-000778</MessageId>
+    <MessageSender>
+      <PartyId>PADPIDA2026MEKONG01</PartyId>
+      <PartyName><FullName>Mekong Digital Distribution</FullName></PartyName>
+    </MessageSender>
+    <MessageRecipient>
+      <PartyId>PADPIDA2026ANSMUSIC</PartyId>
+      <PartyName><FullName>ANS Music</FullName></PartyName>
+    </MessageRecipient>
+    <MessageCreatedDateTime>2026-07-10T08:00:00Z</MessageCreatedDateTime>
+  </MessageHeader>
+  <PurgedRelease>
+    <ReleaseId><ICPN IsEan="false">893001260012</ICPN></ReleaseId>
+  </PurgedRelease>
+</ern:PurgeReleaseMessage>

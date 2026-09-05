@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#05060b">
+<title>Đăng nhập — ANS Music</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ================= BIẾN & NỀN TẢNG ================= */
+:root {
+  --bg: #05060b;
+  --panel: #07090f;
+  --card: rgba(255, 255, 255, .038);
+  --card-border: rgba(255, 255, 255, .085);
+  --field: rgba(255, 255, 255, .045);
+  --field-border: rgba(255, 255, 255, .11);
+  --text: #f3f5fb;
+  --muted: #97a1bb;
+  --accent: #7c5cff;      /* ghi đè bởi brand_accent từ server */
+  --accent-2: #38bdf8;
+  --danger: #ff6b74;
+  --font: 'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+html { overflow-x: hidden; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; color: inherit; }
+img { max-width: 100%; }
+:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; border-radius: 6px; }
+
+.shell { display: flex; min-height: 100vh; min-height: 100dvh; }
+
+/* ================= PANEL TRÁI — THƯƠNG HIỆU ================= */
+.brand {
+  flex: 1.12;
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center;
+  padding: 56px clamp(36px, 6vw, 96px);
+  background: var(--panel);
+  border-right: 1px solid rgba(255, 255, 255, .05);
+}
+/* quầng sáng aurora — trôi rất chậm */
+.aurora {
+  position: absolute; border-radius: 50%;
+  filter: blur(95px); pointer-events: none;
+}
+.aurora.a1 {
+  width: 600px; height: 600px; top: -190px; left: -150px; opacity: .5;
+  background: var(--accent);
+  background: color-mix(in srgb, var(--accent) 88%, #3018a8);
+  animation: drift1 18s ease-in-out infinite alternate;
+}
+.aurora.a2 {
+  width: 500px; height: 500px; bottom: -200px; right: -120px; opacity: .42;
+  background: #0ea5e9;
+  animation: drift2 22s ease-in-out infinite alternate;
+}
+.aurora.a3 {
+  width: 330px; height: 330px; top: 44%; left: 44%; opacity: .22;
+  background: #d946ef;
+  animation: drift3 15s ease-in-out infinite alternate;
+}
+@keyframes drift1 { to { transform: translate(70px, 55px) scale(1.12); } }
+@keyframes drift2 { to { transform: translate(-60px, -50px) scale(1.08); } }
+@keyframes drift3 { to { transform: translate(-85px, 45px) scale(1.18); } }
+/* lưới chấm mờ tạo chất liệu */
+.mesh {
+  position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 90% 85% at 40% 45%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 85% at 40% 45%, #000 30%, transparent 75%);
+}
+.brand-in { position: relative; z-index: 2; max-width: 560px; }
+
+.logo { display: inline-flex; align-items: center; gap: 13px; font-size: 21px; font-weight: 800; letter-spacing: -.02em; }
+.logo img {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .5), 0 0 0 1px rgba(255, 255, 255, .07);
+}
+.logo .logo-name b {
+  background: linear-gradient(92deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.brand-title {
+  margin: 46px 0 16px;
+  font-size: clamp(34px, 3.5vw, 52px);
+  font-weight: 900; line-height: 1.12; letter-spacing: -.035em;
+}
+.brand-title span {
+  background: linear-gradient(92deg, var(--accent) 0%, var(--accent-2) 95%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.brand-tagline { color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 430px; }
+
+.feats { list-style: none; margin-top: 36px; display: flex; flex-direction: column; gap: 14px; }
+.feats li { display: flex; align-items: center; gap: 14px; color: #c4cbdf; font-size: 14.5px; font-weight: 500; }
+.feats .ic {
+  width: 36px; height: 36px; border-radius: 11px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--accent-2);
+  background: rgba(124, 92, 255, .13);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border: 1px solid rgba(124, 92, 255, .28);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.feats .ic svg { width: 17px; height: 17px; }
+
+/* thanh equalizer trang trí */
+.eq { display: flex; align-items: flex-end; gap: 5px; height: 44px; margin-top: 48px; }
+.eq i {
+  width: 6px; border-radius: 4px; opacity: .8;
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
+  animation: beat 1.2s ease-in-out infinite;
+}
+@keyframes beat { 0%, 100% { height: 20%; } 50% { height: 100%; } }
+
+/* ================= PANEL PHẢI — FORM ================= */
+.stage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  padding: 44px clamp(20px, 4vw, 64px);
+}
+.stage::before {
+  content: ""; position: absolute; pointer-events: none;
+  width: 560px; height: 560px; top: -170px; right: -120px;
+  border-radius: 50%; filter: blur(120px); opacity: .14;
+  background: var(--accent);
+}
+.card {
+  position: relative; z-index: 2;
+  width: min(444px, 100%);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 26px;
+  padding: 40px 38px 30px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .05);
+  animation: rise .5s cubic-bezier(.2, .8, .25, 1);
+}
+@keyframes rise { from { opacity: 0; transform: translateY(20px); } }
+
+.admin-badge {
+  display: none;
+  align-items: center; gap: 8px;
+  margin-bottom: 20px; padding: 7px 12px;
+  border-radius: 999px; width: fit-content;
+  font-size: 10.5px; font-weight: 800; letter-spacing: .13em;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, .08);
+  border: 1px solid rgba(251, 191, 36, .25);
+}
+.admin-badge svg { width: 13px; height: 13px; flex-shrink: 0; }
+body.admin .admin-badge { display: inline-flex; }
+
+.card h2 { font-size: 26px; font-weight: 800; letter-spacing: -.025em; }
+.card .sub { color: var(--muted); font-size: 14px; margin: 8px 0 24px; line-height: 1.6; min-height: 1em; }
+
+/* tabs chuyển chế độ — viên trượt */
+.tabs {
+  position: relative;
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .06);
+  border-radius: 13px; padding: 4px; margin-bottom: 24px;
+}
+.tabs::before {
+  content: ""; position: absolute;
+  top: 4px; left: 4px;
+  width: calc(50% - 4px); height: calc(100% - 8px);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .3);
+  transition: transform .26s cubic-bezier(.3, .9, .3, 1);
+}
+.tabs.reg::before { transform: translateX(100%); }
+.tabs button {
+  position: relative; z-index: 1;
+  padding: 9px 6px; border: none; background: none; border-radius: 10px;
+  color: var(--muted); font-size: 13.5px; font-weight: 700;
+  transition: color .2s;
+}
+.tabs button.on { color: var(--text); }
+body.admin .tabs { display: none; }
+
+/* ô nhập — floating label */
+.field { position: relative; margin-bottom: 15px; }
+.field input {
+  width: 100%; padding: 24px 16px 9px;
+  background: var(--field);
+  border: 1.5px solid var(--field-border);
+  border-radius: 13px; color: var(--text);
+  font-family: inherit; font-size: 15px; outline: none;
+  transition: border-color .18s, background .18s, box-shadow .18s;
+}
+.field.has-eye input { padding-right: 52px; }
+.field input:hover { border-color: rgba(255, 255, 255, .18); }
+.field input:focus {
+  border-color: var(--accent);
+  background: rgba(124, 92, 255, .06);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, .16);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.field label {
+  position: absolute; left: 17px; top: 17px;
+  color: var(--muted); font-size: 14.5px; font-weight: 500;
+  pointer-events: none; transition: all .16s ease;
+  max-width: calc(100% - 34px);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+  top: 7px; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--accent-2);
+}
+/* giữ label nổi khi trình duyệt autofill (nền tối, chữ sáng) */
+.field input:-webkit-autofill + label { top: 7px; font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--accent-2); }
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #10131f inset;
+  -webkit-text-fill-color: var(--text);
+  caret-color: var(--text);
+  transition: background-color 999999s ease-out;
+}
+.field .eye {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  background: none; border: none; border-radius: 10px;
+  color: var(--muted);
+  transition: color .15s, background .15s;
+}
+.field .eye:hover { color: var(--text); background: rgba(255, 255, 255, .06); }
+.field .eye svg { width: 19px; height: 19px; }
+.field .eye .ic-hide { display: none; }
+.field .eye.on .ic-show { display: none; }
+.field .eye.on .ic-hide { display: block; }
+
+/* ô nhập mã 6 số */
+.code-label { display: block; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 9px; }
+.code-field { margin-bottom: 15px; }
+.code-field input {
+  width: 100%; padding: 15px 8px;
+  padding-left: calc(8px + .5em);        /* bù letter-spacing để căn giữa thật */
+  text-align: center; letter-spacing: .5em;
+  font-family: inherit; font-size: 24px; font-weight: 800;
+  background: var(--field);
+  border: 1.5px solid var(--field-border);
+  border-radius: 13px; color: var(--text); outline: none;
+  transition: border-color .18s, background .18s, box-shadow .18s;
+}
+.code-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, .16);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* thông báo lỗi — hiện chip đỏ + rung nhẹ */
+.form-error {
+  min-height: 20px; margin: 2px 0 12px;
+  display: flex; align-items: flex-start; gap: 8px;
+  color: var(--danger); font-size: 13px; font-weight: 600; line-height: 1.5;
+}
+.form-error:not(:empty)::before {
+  content: ""; flex-shrink: 0;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--danger); margin-top: 6px;
+  box-shadow: 0 0 8px rgba(255, 107, 116, .8);
+}
+.form-error.shake { animation: shake .4s; }
+@keyframes shake {
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+/* thông báo thành công — xanh lá (vd. đổi mật khẩu xong) */
+.form-error.ok { color: #4ade80; }
+.form-error.ok:not(:empty)::before { background: #4ade80; box-shadow: 0 0 8px rgba(74, 222, 128, .8); }
+
+/* hàng chứa link "Quên mật khẩu?" — chỉ hiện ở chế độ đăng nhập */
+.forgot-row { display: flex; justify-content: flex-end; margin: -6px 0 4px; }
+.forgot-row[hidden] { display: none; }
+
+/* mô tả ngắn ở đầu các bước phụ (quên mật khẩu, 2FA) */
+.step-desc { color: var(--muted); font-size: 14px; margin-bottom: 20px; line-height: 1.65; }
+
+/* nút submit — gradient accent + spinner */
+.btn-submit {
+  width: 100%; padding: 15px 46px;
+  border: none; border-radius: 13px; position: relative;
+  background: linear-gradient(97deg, var(--accent) 0%, #a855f7 55%, var(--accent-2) 135%);
+  color: #fff; font-size: 15px; font-weight: 800; letter-spacing: .01em;
+  box-shadow: 0 12px 32px rgba(124, 92, 255, .34);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 38%, transparent);
+  transition: transform .14s, filter .18s, box-shadow .18s;
+}
+.btn-submit:hover { transform: translateY(-2px); filter: brightness(1.09); }
+.btn-submit:active { transform: translateY(0); }
+.btn-submit[disabled] { opacity: .65; pointer-events: none; }
+.btn-submit .spinner {
+  display: none; position: absolute; left: 18px; top: 50%; margin-top: -9px;
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, .35); border-top-color: #fff;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-submit.loading .spinner { display: block; }
+.btn-submit.loading { pointer-events: none; }
+
+/* hàng thao tác phụ dưới form mã */
+.code-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; font-size: 13px; }
+.linklike { background: none; border: none; padding: 4px 2px; font-size: 13px; font-weight: 600; }
+.linklike.pri { color: var(--accent-2); }
+.linklike.pri:hover { text-decoration: underline; }
+.linklike.mut { color: var(--muted); }
+.linklike.mut:hover { color: var(--text); }
+.linklike.wait { color: var(--muted); pointer-events: none; text-decoration: none; opacity: .7; }
+
+/* thông báo "cần tài khoản quản trị" khi đã đăng nhập bằng user thường */
+.admin-notice {
+  padding: 16px 16px 14px; border-radius: 14px;
+  background: rgba(251, 191, 36, .07);
+  border: 1px solid rgba(251, 191, 36, .22);
+  font-size: 13.5px; color: #e8d9ad; line-height: 1.65;
+}
+.admin-notice b { color: #fbe3a1; }
+.admin-notice .btn-logout {
+  margin-top: 12px; padding: 9px 18px;
+  border-radius: 10px; border: 1px solid rgba(255, 107, 116, .45);
+  background: rgba(255, 107, 116, .1);
+  color: #ffb3b8; font-size: 13px; font-weight: 700;
+  transition: background .15s, color .15s;
+}
+.admin-notice .btn-logout:hover { background: rgba(255, 107, 116, .2); color: #fff; }
+
+/* gợi ý demo / ghi chú bảo mật */
+.hint {
+  margin-top: 22px; padding: 12px 15px;
+  border-radius: 12px; font-size: 12.5px; line-height: 1.65;
+}
+.user-hint {
+  background: rgba(56, 189, 248, .06);
+  border: 1px solid rgba(56, 189, 248, .17);
+  color: #9cc7e6;
+}
+.user-hint b { color: #cfe8f8; }
+.security-note { display: none; color: var(--muted); border: 1px dashed rgba(255, 255, 255, .12); }
+body.admin .security-note { display: block; }
+body.admin .user-hint { display: none; }
+
+.card-foot {
+  margin-top: 24px; padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, .07);
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  font-size: 13px; color: var(--muted);
+}
+.card-foot a:first-child:hover { color: var(--text); }
+.card-foot a#cross-link { color: var(--accent-2); font-weight: 600; }
+.card-foot a#cross-link:hover { text-decoration: underline; }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .shell { flex-direction: column; }
+  /* panel thương hiệu thu thành dải mỏng phía trên */
+  .brand {
+    flex: none; align-items: flex-start;
+    padding: 22px 20px 18px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, .06);
+  }
+  .brand-title, .brand-tagline, .feats, .eq { display: none; }
+  .aurora.a1 { width: 340px; height: 340px; top: -190px; left: -80px; }
+  .aurora.a3 { display: none; }
+  .logo { font-size: 19px; }
+  .logo img { width: 38px; height: 38px; }
+  .stage { align-items: flex-start; padding: 26px 16px 52px; }
+  .card { padding: 32px 24px 24px; }
+}
+@media (max-width: 420px) {
+  .card { padding: 28px 18px 20px; border-radius: 22px; }
+  .card h2 { font-size: 23px; }
+  .code-field input { font-size: 21px; letter-spacing: .4em; padding-left: calc(8px + .4em); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  .eq i { height: 40%; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ============ PANEL TRÁI: THƯƠNG HIỆU ============ -->
+  <aside class="brand">
+    <div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div>
+    <div class="mesh"></div>
+    <div class="brand-in">
+      <a class="logo" href="/">
+        <img src="/static/img/logo.svg" alt="">
+        <span class="logo-name">ANS <b>Music</b></span>
+      </a>
+      <h1 class="brand-title">Âm nhạc của bạn.<br><span>Mọi lúc, mọi nơi.</span></h1>
+      <p class="brand-tagline" id="brand-tagline">Hàng nghìn bài hát, playlist tuyển chọn và bảng xếp hạng cập nhật liên tục — chất lượng cao, không gián đoạn.</p>
+      <ul class="feats">
+        <li>
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+          Nghe không giới hạn, chuyển bài tức thì
+        </li>
+        <li>
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+          Playlist cá nhân &amp; thư viện đồng bộ
+        </li>
+        <li>
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></span>
+          Lời bài hát karaoke theo thời gian thực
+        </li>
+      </ul>
+      <div class="eq" aria-hidden="true">
+        <i style="animation-delay:0s"></i><i style="animation-delay:.15s"></i>
+        <i style="animation-delay:.3s"></i><i style="animation-delay:.05s"></i>
+        <i style="animation-delay:.45s"></i><i style="animation-delay:.2s"></i>
+        <i style="animation-delay:.6s"></i><i style="animation-delay:.35s"></i>
+        <i style="animation-delay:.1s"></i><i style="animation-delay:.5s"></i>
+        <i style="animation-delay:.25s"></i><i style="animation-delay:.4s"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ PANEL PHẢI: FORM ============ -->
+  <main class="stage">
+    <section class="card" aria-labelledby="form-title">
+      <div class="admin-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        KHU VỰC QUẢN TRỊ
+      </div>
+      <h2 id="form-title">Chào mừng trở lại</h2>
+      <p class="sub" id="form-sub">Đăng nhập để tiếp tục hành trình âm nhạc của bạn.</p>
+
+      <div class="tabs" id="mode-tabs">
+        <button type="button" data-mode="login" class="on">Đăng nhập</button>
+        <button type="button" data-mode="register">Tạo tài khoản</button>
+      </div>
+
+      <!-- Bước 1: đăng nhập / đăng ký -->
+      <form id="auth-form" novalidate>
+        <div class="field" id="f-name" hidden>
+          <input id="in-name" type="text" placeholder=" " autocomplete="nickname" maxlength="60">
+          <label for="in-name">Tên hiển thị</label>
+        </div>
+        <div class="field">
+          <input id="in-email" type="email" placeholder=" " autocomplete="email" required>
+          <label for="in-email">Email</label>
+        </div>
+        <div class="field has-eye">
+          <input id="in-pass" type="password" placeholder=" " autocomplete="current-password" required minlength="6">
+          <label for="in-pass">Mật khẩu</label>
+          <button type="button" class="eye" id="btn-eye" title="Hiện/ẩn mật khẩu" aria-label="Hiện mật khẩu" aria-pressed="false">
+            <svg class="ic-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="ic-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+        <!-- Link quên mật khẩu — chỉ hiện ở chế độ đăng nhập (ẩn khi đăng ký) -->
+        <div class="forgot-row" id="forgot-row">
+          <button type="button" class="linklike pri" id="forgot-link">Quên mật khẩu?</button>
+        </div>
+        <div class="form-error" id="form-error" role="alert" aria-live="polite"></div>
+        <button class="btn-submit" id="btn-submit" type="submit">
+          <span class="spinner" aria-hidden="true"></span><span id="btn-label">Đăng nhập</span>
+        </button>
+      </form>
+
+      <!-- Bước 2 đăng ký: nhập mã xác thực gửi qua email -->
+      <form id="code-form" hidden novalidate>
+        <p id="code-msg" style="color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.65"></p>
+        <div class="code-field">
+          <label class="code-label" for="in-code">Mã xác thực 6 số</label>
+          <input id="in-code" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
+        </div>
+        <div class="form-error" id="code-error" role="alert" aria-live="polite"></div>
+        <button class="btn-submit" id="code-submit" type="submit">
+          <span class="spinner" aria-hidden="true"></span><span>Xác nhận &amp; tạo tài khoản</span>
+        </button>
+        <div class="code-actions">
+          <button type="button" class="linklike pri" id="code-resend">Gửi lại mã</button>
+          <button type="button" class="linklike mut" id="code-back">← Sửa thông tin</button>
+        </div>
+      </form>
+
+      <!-- Quên mật khẩu — bước 1: nhập email nhận mã -->
+      <form id="forgot-form" hidden novalidate>
+        <p class="step-desc">Nhập email tài khoản của bạn — chúng tôi sẽ gửi mã 6 số để đặt lại mật khẩu.</p>
+        <div class="field">
+          <input id="in-forgot-email" type="email" placeholder=" " autocomplete="email">
+          <label for="in-forgot-email">Email</label>
+        </div>
+        <div class="form-error" id="forgot-error" role="alert" aria-live="polite"></div>
+        <button class="btn-submit" id="forgot-submit" type="submit">
+          <span class="spinner" aria-hidden="true"></span><span>Gửi mã đặt lại</span>
+        </button>
+        <div class="code-actions" style="justify-content:center">
+          <button type="button" class="linklike mut" id="forgot-back">← Quay lại</button>
+        </div>
+      </form>
+
+      <!-- Quên mật khẩu — bước 2: nhập mã + mật khẩu mới -->
+      <form id="reset-form" hidden novalidate>
+        <p class="step-desc" id="reset-msg"></p>
+        <div class="code-field">
+          <label class="code-label" for="in-reset-code">Mã xác thực 6 số</label>
+          <input id="in-reset-code" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
+        </div>
+        <div class="field has-eye">
+          <input id="in-reset-pass" type="password" placeholder=" " autocomplete="new-password" minlength="6">
+          <label for="in-reset-pass">Mật khẩu mới</label>
+          <button type="button" class="eye" id="btn-eye-reset" title="Hiện/ẩn mật khẩu" aria-label="Hiện mật khẩu" aria-pressed="false">
+            <svg class="ic-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="ic-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+        <div class="field">
+          <input id="in-reset-pass2" type="password" placeholder=" " autocomplete="new-password" minlength="6">
+          <label for="in-reset-pass2">Nhập lại mật khẩu mới</label>
+        </div>
+        <div class="form-error" id="reset-error" role="alert" aria-live="polite"></div>
+        <button class="btn-submit" id="reset-submit" type="submit">
+          <span class="spinner" aria-hidden="true"></span><span>Đặt lại mật khẩu</span>
+        </button>
+        <div class="code-actions" style="justify-content:center">
+          <button type="button" class="linklike mut" id="reset-back">← Quay lại</button>
+        </div>
+      </form>
+
+      <!-- Bước 2 đăng nhập khi tài khoản bật 2FA: mã Google Authenticator -->
+      <form id="twofa-form" hidden novalidate>
+        <div class="code-field">
+          <label class="code-label" for="in-2fa">Mã xác thực 6 số</label>
+          <input id="in-2fa" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code" autofocus>
+        </div>
+        <div class="form-error" id="twofa-error" role="alert" aria-live="polite"></div>
+        <button class="btn-submit" id="twofa-submit" type="submit">
+          <span class="spinner" aria-hidden="true"></span><span>Xác nhận</span>
+        </button>
+        <div class="code-actions" style="justify-content:center">
+          <button type="button" class="linklike mut" id="twofa-back">← Quay lại đăng nhập</button>
+        </div>
+      </form>
+
+      <!-- Đang đăng nhập bằng tài khoản thường trên trang quản trị -->
+      <div class="admin-notice" id="admin-notice" hidden>
+        <span id="notice-msg"></span>
+        <br>
+        <button type="button" class="btn-logout" id="btn-logout">Đăng xuất</button>
+      </div>
+
+      <div class="hint user-hint">
+        <b>Tài khoản trải nghiệm:</b> demo@amnhacso.com · Demo@123
+      </div>
+      <div class="hint security-note">
+        Khu vực dành riêng cho quản trị viên. Mọi phiên đăng nhập được ghi nhận;
+        sai mật khẩu quá 8 lần trong 10 phút sẽ tạm khóa.
+      </div>
+
+      <div class="card-foot">
+        <a href="/">← Về trang nghe nhạc</a>
+        <a href="/admin/login" id="cross-link">Đăng nhập quản trị</a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script type="module">
+import { auth, login, registerRequest, registerConfirm, api,
+         forgotPassword, resetPassword, loginVerify2fa } from '/static/js/api.js?v=2.1.0';
+
+const IS_ADMIN = location.pathname.startsWith('/admin');
+const params = new URLSearchParams(location.search);
+const nextHash = params.get('next') || '#/';
+
+const $ = (id) => document.getElementById(id);
+// Escape HTML khi chèn chuỗi động vào innerHTML
+const h = (s) => String(s ?? '').replace(/[&<>"']/g, (c) =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// CMS phân quyền theo role: admin/manager/uploader đều được vào /admin
+const STAFF_ROLES = ['admin', 'manager', 'uploader'];
+
+let mode = params.get('mode') === 'register' && !IS_ADMIN ? 'register' : 'login';
+let pending = null;        // {email, password, name} khi đang chờ nhập mã
+let resendLeft = 0;        // giây cooldown còn lại của nút "Gửi lại mã"
+let resendTimer = null;
+let pending2fa = null;     // mã pending server trả về khi tài khoản bật 2FA
+let resetEmail = '';       // email đang trong luồng quên mật khẩu
+
+// ---- Áp dụng thương hiệu (server tiêm vào window.ANS_CFG) ----
+const BRAND = (window.ANS_CFG && window.ANS_CFG.brand) || {};
+const BRAND_NAME = BRAND.brand_name || 'ANS Music';
+(function applyBrand() {
+  const logo = BRAND.brand_logo_url || '/static/img/logo.svg';
+  if (BRAND.brand_accent && /^#[0-9a-fA-F]{6}$/.test(BRAND.brand_accent))
+    document.documentElement.style.setProperty('--accent', BRAND.brand_accent);
+  const img = document.querySelector('.logo img');
+  if (img) img.src = logo;
+  const nameEl = document.querySelector('.logo-name');
+  if (nameEl) nameEl.innerHTML = BRAND.brand_short
+    ? `${h(BRAND.brand_short)} <b>${h(BRAND.brand_suffix || '')}</b>`
+    : h(BRAND_NAME);
+  if (BRAND.brand_tagline) $('brand-tagline').textContent = BRAND.brand_tagline;
+  const fav = document.querySelector('link[rel="icon"]');
+  if (fav) fav.href = logo;
+})();
+
+// ---- Điều hướng sau khi xác thực thành công ----
+function gotoApp() {
+  if (IS_ADMIN) location.replace('/admin');
+  else location.replace(nextHash.startsWith('#') && nextHash !== '#/' ? '/' + nextHash : '/');
+}
+
+// ---- Cập nhật giao diện theo chế độ (login / register / admin) ----
+function applyMode() {
+  document.title = (IS_ADMIN ? 'Đăng nhập quản trị' : mode === 'register' ? 'Tạo tài khoản' : 'Đăng nhập')
+    + ' — ' + BRAND_NAME;
+  if (IS_ADMIN) {
+    document.body.classList.add('admin');
+    $('form-title').textContent = 'Đăng nhập quản trị';
+    $('form-sub').textContent = 'Truy cập CMS: catalog, DDEX ingestion, đối tác & báo cáo.';
+    $('cross-link').textContent = 'Đăng nhập người nghe';
+    $('cross-link').href = '/login';
+  } else {
+    const isReg = mode === 'register';
+    $('form-title').textContent = isReg ? 'Tạo tài khoản miễn phí' : 'Chào mừng trở lại';
+    $('form-sub').textContent = isReg
+      ? 'Chỉ mất 30 giây — thích bài hát, tạo playlist, theo dõi nghệ sĩ.'
+      : 'Đăng nhập để tiếp tục hành trình âm nhạc của bạn.';
+    $('f-name').hidden = !isReg;
+    $('btn-label').textContent = isReg ? 'Tạo tài khoản' : 'Đăng nhập';
+    $('in-pass').autocomplete = isReg ? 'new-password' : 'current-password';
+    $('forgot-row').hidden = isReg;   // link quên mật khẩu chỉ hiện ở chế độ đăng nhập
+    $('mode-tabs').classList.toggle('reg', isReg);
+    document.querySelectorAll('#mode-tabs button').forEach((b) =>
+      b.classList.toggle('on', b.dataset.mode === mode));
+  }
+}
+
+document.querySelectorAll('#mode-tabs button').forEach((b) => {
+  b.onclick = () => { mode = b.dataset.mode; $('form-error').textContent = ''; applyMode(); };
+});
+
+// ---- Hiện / ẩn mật khẩu (dùng chung cho mọi ô có nút mắt) ----
+function bindEye(btnId, inputId) {
+  $(btnId).onclick = () => {
+    const p = $(inputId);
+    const show = p.type === 'password';
+    p.type = show ? 'text' : 'password';
+    $(btnId).classList.toggle('on', show);
+    $(btnId).setAttribute('aria-pressed', String(show));
+    $(btnId).setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+  };
+}
+bindEye('btn-eye', 'in-pass');
+bindEye('btn-eye-reset', 'in-reset-pass');
+
+// ---- Hiển thị lỗi: đỏ + rung nhẹ ----
+function showErr(errEl, msg) {
+  errEl.classList.remove('ok');       // bỏ trạng thái thông báo xanh (nếu có)
+  errEl.textContent = msg;
+  errEl.classList.remove('shake');
+  void errEl.offsetWidth;               // restart animation
+  errEl.classList.add('shake');
+}
+
+// ---- Submit bước 1: đăng nhập hoặc gửi mã đăng ký ----
+$('auth-form').onsubmit = async (e) => {
+  e.preventDefault();
+  const errEl = $('form-error');
+  const btn = $('btn-submit');
+  errEl.textContent = '';
+  errEl.classList.remove('shake', 'ok');
+  const email = $('in-email').value.trim();
+  const pass = $('in-pass').value;
+
+  // Validate cơ bản trước khi gọi API
+  if (!email || !pass) { showErr(errEl, 'Nhập đầy đủ email và mật khẩu.'); return; }
+  if (!EMAIL_RE.test(email)) { showErr(errEl, 'Email không hợp lệ.'); $('in-email').focus(); return; }
+  // chỉ ép độ dài khi ĐĂNG KÝ — tài khoản cũ mật khẩu ngắn vẫn đăng nhập được
+  if (mode === 'register' && pass.length < 6) {
+    showErr(errEl, 'Mật khẩu tối thiểu 6 ký tự.'); $('in-pass').focus(); return;
+  }
+
+  btn.disabled = true;
+  btn.classList.add('loading');
+  try {
+    if (mode === 'register' && !IS_ADMIN) {
+      // Bước 1 đăng ký: gửi mã xác thực tới email
+      const name = $('in-name').value.trim();
+      const res = await registerRequest(email, pass, name);
+      pending = { email, password: pass, name };
+      showCodeStep(res);
+      return;
+    }
+    const res = await login(email, pass);
+    if (res.requires_2fa) {
+      // Tài khoản bật 2FA → chuyển sang bước nhập mã Google Authenticator
+      show2faStep(res.pending);
+      return;
+    }
+    const user = res.user;
+    if (IS_ADMIN && !STAFF_ROLES.includes(user.role)) {
+      auth.clear();
+      showErr(errEl, 'Tài khoản không có quyền quản trị.');
+      return;
+    }
+    gotoApp();
+  } catch (err) {
+    showErr(errEl, err.message || 'Không thực hiện được — thử lại.');
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+};
+
+/* ---- Bước 2 đăng ký: nhập mã xác thực ---- */
+function showCodeStep(res) {
+  $('auth-form').hidden = true;
+  $('mode-tabs').style.display = 'none';
+  $('code-form').hidden = false;
+  $('form-title').textContent = 'Xác thực email';
+  $('form-sub').textContent = '';
+  $('code-msg').innerHTML = (res && res.email_sent)
+    ? `Đã gửi mã 6 số tới <b style="color:var(--text)">${h(pending.email)}</b>. Kiểm tra hộp thư (cả mục Spam) và nhập mã bên dưới.`
+    : `Chưa cấu hình email trên server — mã hiển thị ở <b style="color:var(--text)">console server</b> (cấu hình SMTP trong .env để gửi email thật).`;
+  $('in-code').value = '';
+  // mã vừa được gửi → khoá "Gửi lại mã" 30s (chống spam rate-limit server 5 mã/10 phút)
+  startResendCooldown(30);
+  setTimeout(() => $('in-code').focus(), 60);
+}
+
+function backToForm() {
+  $('code-form').hidden = true;
+  $('auth-form').hidden = false;
+  $('mode-tabs').style.display = '';
+  stopResendCooldown();
+  applyMode();
+}
+
+// Chỉ nhận chữ số, tối đa 6 ký tự (mã đăng ký, mã đặt lại mật khẩu, mã 2FA)
+['in-code', 'in-reset-code', 'in-2fa'].forEach((id) => {
+  $(id).addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+  });
+});
+
+$('code-form').onsubmit = async (e) => {
+  e.preventDefault();
+  const errEl = $('code-error');
+  const btn = $('code-submit');
+  errEl.textContent = '';
+  const code = $('in-code').value.trim();
+  if (code.length !== 6) { showErr(errEl, 'Nhập đủ 6 số.'); $('in-code').focus(); return; }
+  btn.disabled = true; btn.classList.add('loading');
+  try {
+    await registerConfirm(pending.email, code);
+    gotoApp();
+  } catch (err) {
+    showErr(errEl, err.message || 'Mã không đúng.');
+  } finally {
+    btn.disabled = false; btn.classList.remove('loading');
+  }
+};
+
+// ---- Gửi lại mã (cooldown 30 giây) ----
+function startResendCooldown(sec) {
+  clearInterval(resendTimer);
+  resendLeft = sec;
+  const el = $('code-resend');
+  el.classList.add('wait');
+  const render = () => {
+    el.textContent = resendLeft > 0 ? `Gửi lại mã (${resendLeft}s)` : 'Gửi lại mã';
+  };
+  render();
+  resendTimer = setInterval(() => {
+    resendLeft -= 1;
+    if (resendLeft <= 0) { resendLeft = 0; clearInterval(resendTimer); el.classList.remove('wait'); }
+    render();
+  }, 1000);
+}
+function stopResendCooldown() {
+  clearInterval(resendTimer);
+  resendLeft = 0;
+  $('code-resend').classList.remove('wait');
+  $('code-resend').textContent = 'Gửi lại mã';
+}
+
+let resendBusy = false;   // khóa in-flight: double-click không được bắn 2 request
+$('code-resend').onclick = async () => {
+  if (!pending || resendLeft > 0 || resendBusy) return;
+  resendBusy = true;
+  $('code-resend').disabled = true;
+  $('code-error').textContent = '';
+  try {
+    const res = await registerRequest(pending.email, pending.password, pending.name);
+    showCodeStep(res);
+    $('code-msg').innerHTML = '✓ Đã gửi lại mã. ' + $('code-msg').innerHTML;
+  } catch (err) {
+    showErr($('code-error'), err.message);
+  } finally {
+    resendBusy = false;
+    $('code-resend').disabled = false;
+  }
+};
+$('code-back').onclick = backToForm;
+
+/* ================= QUÊN MẬT KHẨU + 2FA ================= */
+
+// Quay về form đăng nhập từ các bước phụ (quên mật khẩu / 2FA)
+// prefillEmail: điền sẵn email; okMsg: thông báo xanh (vd. đổi mật khẩu xong)
+function backToLogin(prefillEmail, okMsg) {
+  ['forgot-form', 'reset-form', 'twofa-form'].forEach((id) => { $(id).hidden = true; });
+  $('auth-form').hidden = false;
+  $('mode-tabs').style.display = '';
+  mode = 'login';
+  applyMode();
+  if (prefillEmail) $('in-email').value = prefillEmail;
+  const errEl = $('form-error');
+  errEl.classList.remove('ok', 'shake');
+  errEl.textContent = '';
+  if (okMsg) { errEl.classList.add('ok'); errEl.textContent = okMsg; }
+}
+
+// ---- Quên mật khẩu — bước 1: nhập email nhận mã ----
+function openForgot() {
+  $('auth-form').hidden = true;
+  $('mode-tabs').style.display = 'none';
+  $('reset-form').hidden = true;
+  $('forgot-form').hidden = false;
+  $('form-title').textContent = 'Đặt lại mật khẩu';
+  $('form-sub').textContent = '';
+  // Prefill từ ô email đăng nhập (không ghi đè nếu người dùng đã gõ ở bước này)
+  if (!$('in-forgot-email').value.trim()) $('in-forgot-email').value = $('in-email').value.trim();
+  $('forgot-error').textContent = '';
+  setTimeout(() => $('in-forgot-email').focus(), 60);
+}
+$('forgot-link').onclick = () => { $('form-error').textContent = ''; openForgot(); };
+$('forgot-back').onclick = () => backToLogin();
+
+$('forgot-form').onsubmit = async (e) => {
+  e.preventDefault();
+  const errEl = $('forgot-error');
+  const btn = $('forgot-submit');
+  errEl.textContent = '';
+  const email = $('in-forgot-email').value.trim();
+  if (!EMAIL_RE.test(email)) { showErr(errEl, 'Email không hợp lệ.'); $('in-forgot-email').focus(); return; }
+  btn.disabled = true; btn.classList.add('loading');
+  try {
+    await forgotPassword(email);   // server luôn trả 200 (không lộ email nào tồn tại)
+    resetEmail = email;
+    showResetStep();
+  } catch (err) {
+    // 429 rate-limit hoặc lỗi mạng
+    showErr(errEl, err.message || 'Không gửi được mã — thử lại sau.');
+  } finally {
+    btn.disabled = false; btn.classList.remove('loading');
+  }
+};
+
+// ---- Quên mật khẩu — bước 2: nhập mã + mật khẩu mới ----
+function showResetStep() {
+  $('forgot-form').hidden = true;
+  $('reset-form').hidden = false;
+  $('form-title').textContent = 'Đặt lại mật khẩu';
+  $('form-sub').textContent = '';
+  $('reset-msg').innerHTML =
+    `Nếu <b style="color:var(--text)">${h(resetEmail)}</b> đã đăng ký, mã 6 số đã được gửi tới hộp thư. ` +
+    `Nhập mã và mật khẩu mới bên dưới.`;
+  $('in-reset-code').value = '';
+  $('in-reset-pass').value = '';
+  $('in-reset-pass2').value = '';
+  $('reset-error').textContent = '';
+  setTimeout(() => $('in-reset-code').focus(), 60);
+}
+$('reset-back').onclick = () => { $('reset-form').hidden = true; openForgot(); };
+
+$('reset-form').onsubmit = async (e) => {
+  e.preventDefault();
+  const errEl = $('reset-error');
+  const btn = $('reset-submit');
+  errEl.textContent = '';
+  const code = $('in-reset-code').value.trim();
+  const p1 = $('in-reset-pass').value;
+  const p2 = $('in-reset-pass2').value;
+  if (code.length !== 6) { showErr(errEl, 'Nhập đủ mã 6 số.'); $('in-reset-code').focus(); return; }
+  if (p1.length < 6) { showErr(errEl, 'Mật khẩu mới tối thiểu 6 ký tự.'); $('in-reset-pass').focus(); return; }
+  if (p1 !== p2) { showErr(errEl, 'Mật khẩu nhập lại không khớp.'); $('in-reset-pass2').focus(); return; }
+  btn.disabled = true; btn.classList.add('loading');
+  try {
+    await resetPassword(resetEmail, code, p1);
+    // Thành công: quay về đăng nhập, điền sẵn email + thông báo xanh
+    backToLogin(resetEmail, 'Đã đổi mật khẩu — đăng nhập ngay.');
+    setTimeout(() => $('in-pass').focus(), 60);
+  } catch (err) {
+    // Mã sai / hết hạn / 429 rate-limit — server trả detail cụ thể
+    showErr(errEl, err.message || 'Mã không đúng hoặc đã hết hạn.');
+  } finally {
+    btn.disabled = false; btn.classList.remove('loading');
+  }
+};
+
+// ---- Bước 2FA khi đăng nhập (tài khoản bật Google Authenticator) ----
+function show2faStep(p) {
+  pending2fa = p;
+  $('auth-form').hidden = true;
+  $('mode-tabs').style.display = 'none';
+  $('twofa-form').hidden = false;
+  $('form-title').textContent = 'Xác thực 2 lớp';
+  $('form-sub').textContent = 'Nhập mã 6 số từ Google Authenticator để hoàn tất đăng nhập.';
+  $('in-2fa').value = '';
+  $('twofa-error').textContent = '';
+  setTimeout(() => $('in-2fa').focus(), 60);
+}
+$('twofa-back').onclick = () => { pending2fa = null; backToLogin(); };
+
+$('twofa-form').onsubmit = async (e) => {
+  e.preventDefault();
+  const errEl = $('twofa-error');
+  const btn = $('twofa-submit');
+  errEl.textContent = '';
+  const code = $('in-2fa').value.trim();
+  if (code.length !== 6) { showErr(errEl, 'Nhập đủ mã 6 số.'); $('in-2fa').focus(); return; }
+  btn.disabled = true; btn.classList.add('loading');
+  try {
+    const data = await loginVerify2fa(pending2fa, code);
+    if (IS_ADMIN && !STAFF_ROLES.includes(data.user.role)) {
+      auth.clear();
+      showErr(errEl, 'Tài khoản không có quyền quản trị.');
+      return;
+    }
+    gotoApp();
+  } catch (err) {
+    // Sai mã → rung + cho nhập lại (server tự khóa sau 8 lần sai)
+    showErr(errEl, err.message || 'Mã không đúng — thử lại.');
+    $('in-2fa').select();
+    $('in-2fa').focus();
+  } finally {
+    btn.disabled = false; btn.classList.remove('loading');
+  }
+};
+
+// ---- Trang quản trị nhưng đang đăng nhập bằng tài khoản thường ----
+function showAdminNotice(me) {
+  $('auth-form').hidden = true;
+  $('code-form').hidden = true;
+  $('admin-notice').hidden = false;
+  $('form-title').textContent = 'Cần tài khoản quản trị';
+  $('form-sub').textContent = '';
+  $('notice-msg').innerHTML =
+    `Bạn đang đăng nhập bằng <b>${h(me.email || me.display_name || 'tài khoản hiện tại')}</b> — ` +
+    `tài khoản này không có quyền truy cập khu vực quản trị. Đăng xuất rồi đăng nhập lại bằng tài khoản quản trị viên.`;
+}
+$('btn-logout').onclick = () => {
+  auth.clear();
+  $('admin-notice').hidden = true;
+  $('auth-form').hidden = false;
+  applyMode();
+};
+
+// ---- Đã đăng nhập sẵn (token còn hiệu lực) khi tải trang ----
+(async () => {
+  // Áp giao diện đúng chế độ NGAY (đồng bộ) — không thì /admin/login sẽ flash
+  // giao diện người nghe (tabs + hint tài khoản demo) suốt round-trip /v1/me
+  applyMode();
+  if (!auth.loggedIn) return;
+  try {
+    const me = await api.get('/v1/me');
+    auth.set(auth.token, me);   // đồng bộ role mới nhất từ server vào localStorage
+    if (!IS_ADMIN || STAFF_ROLES.includes(me.role)) { gotoApp(); return; }
+    // Admin mode + tài khoản thường: KHÔNG auto-redirect (tránh vòng lặp) — hiện thông báo + nút đăng xuất
+    showAdminNotice(me);
+  } catch { /* token hết hạn — api.js đã tự clear */ }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ANS Music — Nghe nhạc trực tuyến</title>
+<meta name="description" content="ANS Music — nền tảng nghe nhạc trực tuyến: hàng nghìn bài hát, album, playlist và bảng xếp hạng.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/app.css?v=2.1.0">
+</head>
+<body>
+
+<!-- ============ SVG ICON SPRITE ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9.5z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><path d="M10.5 3a7.5 7.5 0 1 0 4.55 13.46l4.24 4.25 1.42-1.42-4.25-4.24A7.5 7.5 0 0 0 10.5 3zm0 2a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11z"/></symbol>
+  <symbol id="i-library" viewBox="0 0 24 24"><path d="M4 3h2v18H4V3zm5 0h2v18H9V3zm5.5.6 6 16.9-1.9.7-6-16.9 1.9-.7z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10h4v10H4zm6 0V4h4v16h-4zm6 0v-7h4v7h-4z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M6 4h2v16H6V4zm14 .86v14.28a1 1 0 0 1-1.54.84L9 12.84a1 1 0 0 1 0-1.68l9.46-7.14A1 1 0 0 1 20 4.86z"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M16 4h2v16h-2V4zM4 4.86v14.28a1 1 0 0 0 1.54.84L15 12.84a1 1 0 0 0 0-1.68L5.54 4.02A1 1 0 0 0 4 4.86z"/></symbol>
+  <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M17 4h4v4h-2V7.41l-4.29 4.3-1.42-1.42L17.59 6H17V4zM3 6h4.5l2.55 2.83-1.34 1.35L6.6 8H3V6zm14.59 12H17v-2h4v4h-2v-1.59l-4.3-4.3 1.42-1.4 3.47 3.29zM3 18h3.6l3.1-3.44 1.35 1.34L8.5 20H3v-2z" transform="translate(0 -1)"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.9-9.2C.5 8.7 2.4 5 6 5c2 0 3.4 1 4.5 2.5.4.5.9 1.2 1.5 2.2.6-1 1.1-1.7 1.5-2.2C14.6 6 16 5 18 5c3.6 0 5.5 3.7 3.9 6.8C19.5 16.1 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-heart-f" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.9-9.2C.5 8.7 2.4 5 6 5c2 0 3.4 1 4.5 2.5.4.5.9 1.2 1.5 2.2.6-1 1.1-1.7 1.5-2.2C14.6 6 16 5 18 5c3.6 0 5.5 3.7 3.9 6.8C19.5 16.1 12 21 12 21z"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm18.5 3-2.3-2.3-1.4 1.4 2.3 2.3-2.3 2.3 1.4 1.4 2.3-2.3 2.3 2.3 1.4-1.4-2.3-2.3 2.3-2.3-1.4-1.4-2.3 2.3z" transform="translate(-3 0)"/></symbol>
+  <symbol id="i-queue" viewBox="0 0 24 24"><path d="M3 6h12v2H3V6zm0 5h12v2H3v-2zm0 5h8v2H3v-2zm16-9v8.35A3.5 3.5 0 1 0 21 18.5V9h-2z"/></symbol>
+  <symbol id="i-lyrics" viewBox="0 0 24 24"><path d="M4 4h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-9l-5 4v-4H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm3 4v2h10V8H7zm0 4v2h7v-2H7z"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><path d="M5 10.5A1.5 1.5 0 1 1 5 13.5 1.5 1.5 0 0 1 5 10.5zm7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6 10.6 12 5 6.4 6.4 5z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 4 1.4 1.4L9.8 12l6.6 6.6L15 20l-8-8 8-8z"/></symbol>
+  <symbol id="i-fwd" viewBox="0 0 24 24"><path d="M9 4 7.6 5.4 14.2 12l-6.6 6.6L9 20l8-8-8-8z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm-1 3v6l5 3 .9-1.6-3.9-2.3V7h-2z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 3a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 11c4.4 0 8 2.2 8 5v2H4v-2c0-2.8 3.6-5 8-5z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m9.6 16.6-4.2-4.2L4 13.8l5.6 5.6L20 9l-1.4-1.4-9 9z"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M9 3h6l1 2h4v2H4V5h4l1-2zM6 9h12l-1 12H7L6 9z"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="m16.9 3.7 3.4 3.4-11 11L5 19l.9-4.3 11-11zM3 21h18v-2H3v2z" transform="translate(0 -1)"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M19 3v10.55A4 4 0 1 0 21 17V7h-6v6.55A4 4 0 1 0 17 17V3h2z" transform="translate(-4 0)"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path d="m12 8 6 6-1.4 1.4L12 10.8l-4.6 4.6L6 14l6-6z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M18 8a3 3 0 1 0-2.83-4H15a3 3 0 0 0 .18 1.03L8.9 8.66a3 3 0 1 0 0 6.68l6.28 3.63A3 3 0 1 0 18 16c-.6 0-1.16.18-1.63.48l-6.28-3.62a3.03 3.03 0 0 0 0-1.72l6.28-3.62c.47.3 1.02.48 1.63.48z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0-5h.01L13 4h-2l.99-2zM12 22h.01L13 20h-2l.99 2zM2 12l2-1v2l-2-1zm20 0-2-1v2l2-1zM4.2 5.6 6 4.9l-.7 1.8-1.1-1.1zm15.6 12.8-1.8.7.7-1.8 1.1 1.1zM4.2 18.4l1.1-1.1.7 1.8-1.8-.7zM19.8 5.6l-.7 1.8-1.1-1.1 1.8-.7z"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-8v-2h7V5h-7V3zm-1 6 1.4 1.4L8.8 12l1.6 1.6L9 15l-4-3 4-3z" transform="translate(1 0)"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M11 3h2v10.2l3.6-3.6L18 11l-6 6-6-6 1.4-1.4L11 13.2V3zM4 19h16v2H4v-2z"/></symbol>
+  <symbol id="i-disc" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm0 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 3h8.6L21 12.4a1 1 0 0 1 0 1.4l-7.2 7.2a1 1 0 0 1-1.4 0L3 11.6V3zm5.5 3A2.5 2.5 0 1 0 8.5 11 2.5 2.5 0 0 0 8.5 6z"/></symbol>
+</svg>
+
+<!-- Nền aurora chuyển động -->
+<div id="bg-fx" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<div id="app">
+  <!-- ============ SIDEBAR ============ -->
+  <aside id="sidebar">
+    <a class="brand" href="#/">
+      <img src="/static/img/logo.svg" alt="ANS Music" width="34" height="34">
+      <span>ANS <b>Music</b></span>
+    </a>
+    <nav class="nav-main">
+      <a href="#/" data-route="home"><svg><use href="#i-home"/></svg><span data-i18n="nav_home">Trang chủ</span></a>
+      <a href="#/search" data-route="search"><svg><use href="#i-search"/></svg><span data-i18n="nav_search">Tìm kiếm</span></a>
+      <a href="#/charts" data-route="charts"><svg><use href="#i-chart"/></svg><span data-i18n="nav_charts">Bảng xếp hạng</span></a>
+      <a href="#/albums" data-route="albums"><svg><use href="#i-disc"/></svg><span data-i18n="nav_albums">Album mới</span></a>
+      <a href="#/tracks" data-route="tracks"><svg><use href="#i-music"/></svg><span data-i18n="nav_tracks">Tất cả bài hát</span></a>
+      <a href="#/genres" data-route="genres"><svg><use href="#i-tag"/></svg><span data-i18n="nav_genres">Thể loại</span></a>
+      <a href="#/library" data-route="library"><svg><use href="#i-library"/></svg><span data-i18n="nav_library">Thư viện</span></a>
+    </nav>
+    <div class="sidebar-section">
+      <div class="sidebar-head">
+        <span data-i18n="my_playlists">Playlist của tôi</span>
+        <button class="icon-btn" id="btn-new-playlist" title="Tạo playlist mới"><svg><use href="#i-plus"/></svg></button>
+      </div>
+      <div id="sidebar-playlists" class="sidebar-list"></div>
+    </div>
+    <div class="sidebar-bottom">
+      <button class="lang-btn" id="btn-lang" title="Switch language">
+        <span class="globe">🌐</span><span id="lang-label">VI</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main id="main">
+    <header id="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn nav-arrow" id="btn-back" title="Quay lại"><svg><use href="#i-back"/></svg></button>
+        <button class="icon-btn nav-arrow" id="btn-fwd" title="Tiến tới"><svg><use href="#i-fwd"/></svg></button>
+      </div>
+      <div class="topbar-search">
+        <svg class="search-ico"><use href="#i-search"/></svg>
+        <input id="global-search" type="search" data-i18n-ph="search_ph" placeholder="Bài hát, nghệ sĩ, album… (Ctrl+K)" autocomplete="off">
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" id="btn-theme" title="Đổi giao diện sáng/tối"><svg><use href="#i-sun"/></svg></button>
+        <div id="auth-area"></div>
+      </div>
+    </header>
+    <div id="view" tabindex="-1"></div>
+  </main>
+
+  <!-- ============ QUEUE PANEL ============ -->
+  <aside id="queue-panel" hidden>
+    <div class="panel-head">
+      <h3 data-i18n="queue">Hàng đợi phát</h3>
+      <button class="icon-btn" id="btn-queue-close"><svg><use href="#i-close"/></svg></button>
+    </div>
+    <div id="queue-list"></div>
+  </aside>
+
+  <!-- ============ PLAYER BAR ============ -->
+  <footer id="playerbar" class="empty">
+    <div class="pb-left">
+      <img id="pb-cover" src="/static/img/logo.svg" alt="">
+      <div class="pb-meta">
+        <a id="pb-title" href="#">Chưa phát bài nào</a>
+        <div id="pb-artists"></div>
+      </div>
+      <button class="icon-btn like-btn" id="pb-like" title="Thích"><svg><use href="#i-heart"/></svg></button>
+    </div>
+    <div class="pb-center">
+      <div class="pb-controls">
+        <button class="icon-btn" id="pb-shuffle" title="Trộn bài"><svg><use href="#i-shuffle"/></svg></button>
+        <button class="icon-btn" id="pb-prev" title="Bài trước"><svg><use href="#i-prev"/></svg></button>
+        <button class="play-btn" id="pb-play" title="Phát/Dừng"><svg id="pb-play-ico"><use href="#i-play"/></svg></button>
+        <button class="icon-btn" id="pb-next" title="Bài kế"><svg><use href="#i-next"/></svg></button>
+        <button class="icon-btn" id="pb-repeat" title="Lặp lại"><svg><use href="#i-repeat"/></svg><span class="repeat-one">1</span></button>
+      </div>
+      <div class="pb-progress">
+        <span id="pb-cur">0:00</span>
+        <div class="seekbar" id="pb-seek">
+          <div class="seek-buffer" id="pb-buffer"></div>
+          <div class="seek-fill" id="pb-fill"></div>
+          <div class="seek-knob" id="pb-knob"></div>
+          <canvas id="pb-wave" aria-hidden="true"></canvas>
+        </div>
+        <span id="pb-dur">0:00</span>
+      </div>
+    </div>
+    <div class="pb-right">
+      <button class="icon-btn" id="pb-lyrics" title="Lời bài hát"><svg><use href="#i-lyrics"/></svg></button>
+      <button class="icon-btn" id="pb-queue" title="Hàng đợi"><svg><use href="#i-queue"/></svg></button>
+      <button class="icon-btn" id="pb-mute" title="Tắt tiếng"><svg id="pb-vol-ico"><use href="#i-volume"/></svg></button>
+      <div class="volbar" id="pb-volbar"><div class="vol-fill" id="pb-volfill"></div></div>
+      <button class="icon-btn" id="pb-expand" title="Toàn màn hình"><svg><use href="#i-expand"/></svg></button>
+    </div>
+  </footer>
+
+  <!-- ============ NOW PLAYING (full screen) ============ -->
+  <div id="now-playing" hidden>
+    <div class="np-bg" id="np-bg"></div>
+    <button class="icon-btn np-close" id="np-close"><svg><use href="#i-close"/></svg></button>
+    <div class="np-body">
+      <div class="np-left">
+        <div class="np-cover-wrap">
+          <div class="vinyl" aria-hidden="true"></div>
+          <img id="np-cover" src="/static/img/logo.svg" alt="">
+        </div>
+        <div class="np-info">
+          <h2 id="np-title"></h2>
+          <div id="np-artists"></div>
+        </div>
+        <div class="np-wave-wrap" id="np-wave-wrap">
+          <canvas id="np-wave"></canvas>
+          <div class="np-times"><span id="np-cur">0:00</span><span id="np-total">0:00</span></div>
+        </div>
+        <div class="np-actions">
+          <button class="icon-btn like-btn" id="np-like"><svg><use href="#i-heart"/></svg></button>
+          <button class="icon-btn" id="np-add-pl" title="Thêm vào playlist"><svg><use href="#i-plus"/></svg></button>
+          <button class="icon-btn" id="np-share" title="Chia sẻ"><svg><use href="#i-share"/></svg></button>
+        </div>
+      </div>
+      <div class="np-right" id="np-lyrics-wrap">
+        <div id="np-lyrics" class="np-lyrics"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav (mobile) -->
+  <nav id="bottom-nav">
+    <a href="#/" data-route="home"><svg><use href="#i-home"/></svg><span data-i18n="nav_home_s">Trang chủ</span></a>
+    <a href="#/search" data-route="search"><svg><use href="#i-search"/></svg><span data-i18n="nav_search">Tìm kiếm</span></a>
+    <a href="#/charts" data-route="charts"><svg><use href="#i-chart"/></svg><span data-i18n="nav_charts_s">BXH</span></a>
+    <a href="#/library" data-route="library"><svg><use href="#i-library"/></svg><span data-i18n="nav_library">Thư viện</span></a>
+    <button id="btn-lang-m"><span style="font-size:18px">🌐</span><span id="lang-label-m">VI</span></button>
+  </nav>
+
+  <div id="ctx-root"></div>
+  <div id="modal-root"></div>
+  <div id="toast-root"></div>
+</div>
+
+<audio id="audio" preload="auto"></audio>
+
+<script type="module" src="/static/js/app.js?v=2.1.0"></script>
+</body>
+</html>

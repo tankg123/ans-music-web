@@ -1,0 +1,27 @@
+# Dữ liệu runtime — KHÔNG commit (secret.key, DB, nhạc, dropbox SFTP)
+backend/data/
+backend/media/
+
+# Môi trường & bí mật
+.env
+backend/.env
+frontend/.env
+*.pem
+*.key
+
+# Node / build
+node_modules/
+backend/dist/
+frontend/dist/
+*.tsbuildinfo
+
+# Python cũ (legacy)
+legacy-python/__pycache__/
+**/__pycache__/
+*.pyc
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

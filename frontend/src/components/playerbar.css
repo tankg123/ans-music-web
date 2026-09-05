@@ -1,0 +1,138 @@
+/* ============ PlayerBar (bổ sung, không sửa index.css) ============ */
+#playerbar {
+  position: relative;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 8%, var(--bg-elev)), var(--bg-elev)) !important;
+  box-shadow: 0 -10px 40px -18px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* ---- ảnh bìa mở Now Playing ---- */
+.pbx-cover-btn {
+  position: relative; width: 52px; height: 52px; border: none; padding: 0;
+  background: none; cursor: pointer; border-radius: 8px; flex-shrink: 0;
+  transition: transform .2s ease;
+}
+.pbx-cover-btn:hover { transform: translateY(-2px) scale(1.03); }
+.pbx-cover-btn .pb-cover { width: 52px; height: 52px; box-shadow: 0 8px 22px -8px rgba(0,0,0,.7); }
+.pbx-cover-veil {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #fff; background: rgba(0,0,0,.42); border-radius: 8px; opacity: 0;
+  transition: opacity .2s ease;
+}
+.pbx-cover-btn:hover .pbx-cover-veil { opacity: 1; }
+.pbx-title { cursor: pointer; }
+.pbx-title:hover { text-decoration: underline; color: var(--accent); }
+
+/* ---- nút icon chung ---- */
+.pbx-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border: none; border-radius: 9px; background: none;
+  color: var(--muted); cursor: pointer; transition: color .15s, background .15s, transform .12s;
+}
+.pbx-icon:hover { color: var(--text); background: var(--bg-hover); transform: translateY(-1px); }
+.pb-controls .pbx-icon { color: var(--muted); }
+.pb-controls .pbx-icon:hover { color: var(--text); background: var(--bg-hover); }
+.pbx-icon.on { color: var(--accent); position: relative; }
+.pb-controls .pbx-icon.on { color: var(--accent); }
+.pbx-icon.on::after {
+  content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.pbx-controls { gap: 10px !important; }
+.pbx-nav { display: inline-flex; align-items: center; justify-content: center; transition: transform .12s, color .15s; }
+.pbx-nav:hover { transform: scale(1.14); color: var(--accent); }
+.pbx-play {
+  display: inline-flex !important; align-items: center; justify-content: center;
+  transition: transform .14s ease, box-shadow .2s ease;
+  box-shadow: 0 6px 20px -6px rgba(255,255,255,.4);
+}
+.pbx-play:hover { transform: scale(1.08); }
+.pbx-play:active { transform: scale(.96); }
+
+/* ---- seek bar 3D ---- */
+.pbx-seek { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 560px; }
+.pbx-time { font-size: 11.5px; color: var(--muted); min-width: 38px; text-align: center; font-variant-numeric: tabular-nums; }
+.pbx-bar {
+  position: relative; flex: 1; height: 6px; border-radius: 999px;
+  background: var(--bg-hover); cursor: pointer; touch-action: none;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.4);
+}
+.pbx-bar::before {
+  content: ''; position: absolute; inset: -7px 0; /* vùng bấm rộng hơn */
+}
+.pbx-fill {
+  position: relative; height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  box-shadow: 0 0 10px -1px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.pbx-knob {
+  position: absolute; right: -6px; top: 50%; width: 12px; height: 12px;
+  transform: translateY(-50%) scale(0); transform-origin: center;
+  border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.6);
+  transition: transform .15s ease;
+}
+.pbx-bar:hover .pbx-knob, .pbx-bar.dragging .pbx-knob { transform: translateY(-50%) scale(1); }
+.pbx-bar.dragging .pbx-fill { filter: brightness(1.12); }
+
+/* ---- phải: hàng đợi / mở rộng / âm lượng ---- */
+.pbx-side { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+.pbx-vol { display: flex; align-items: center; gap: 6px; }
+.pbx-vol input[type=range] {
+  -webkit-appearance: none; appearance: none; width: 92px; height: 6px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent) 0 var(--vol, 100%), var(--bg-hover) var(--vol, 100%));
+  cursor: pointer; outline: none;
+}
+.pbx-vol input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.5); cursor: pointer;
+}
+.pbx-vol input[type=range]::-moz-range-thumb {
+  width: 12px; height: 12px; border: none; border-radius: 50%; background: #fff; cursor: pointer;
+}
+
+/* ---- Player hiện lên bằng cách trượt từ dưới ---- */
+#playerbar { animation: pbRise .34s cubic-bezier(.2,.8,.2,1); }
+@keyframes pbRise { from { opacity: 0; transform: translateY(100%); } }
+
+/* ---- Bìa đĩa vinyl xoay ---- */
+.pbx-cover-btn.pbx-vinyl,
+.pbx-vinyl .pb-cover { border-radius: 50%; }
+.pbx-vinyl .pb-cover {
+  animation: pbSpin 8s linear infinite;
+  animation-play-state: paused;
+  box-shadow: 0 0 0 3px rgba(0,0,0,.55), 0 8px 22px -8px rgba(0,0,0,.8),
+    0 0 0 5px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.pbx-vinyl.spinning .pb-cover { animation-play-state: running; }
+.pbx-vinyl .pbx-cover-veil { border-radius: 50%; }
+.pbx-vinyl-hole {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--bg-elev); border: 1px solid rgba(0,0,0,.6);
+  box-shadow: inset 0 0 0 3px rgba(0,0,0,.35); pointer-events: none;
+}
+@keyframes pbSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .pbx-vinyl .pb-cover { animation: none; }
+  #playerbar { animation: none; }
+}
+
+/* ---- Vùng sóng âm seek: sóng tĩnh của bài (phần đã phát tô màu accent) ---- */
+.pbx-waveseek {
+  position: relative; flex: 1; height: 40px; cursor: pointer; touch-action: none;
+  border-radius: 8px; overflow: hidden;
+}
+.pbx-waveseek-wave { position: absolute; inset: 0; pointer-events: none; }
+.pbx-waveseek.dragging .pbx-waveseek-wave { filter: brightness(1.15); }
+.pbx-waveseek-knob {
+  position: absolute; top: 0; width: 2px; height: 100%;
+  background: #fff; box-shadow: 0 0 8px 1px rgba(255,255,255,.6);
+  transform: translateX(-1px); opacity: 0; transition: opacity .15s ease; pointer-events: none;
+}
+.pbx-waveseek:hover .pbx-waveseek-knob, .pbx-waveseek.dragging .pbx-waveseek-knob { opacity: 1; }
+
+@media (max-width: 720px) {
+  .pbx-vol input[type=range] { width: 60px; }
+  .pbx-seek { max-width: none; }
+}

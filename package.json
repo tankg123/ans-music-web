@@ -1,0 +1,17 @@
+{
+  "name": "ans-music",
+  "version": "2.2.0",
+  "private": true,
+  "description": "ANS Music — Backend Node.js (Express+TS, :4039/api) + Frontend React (Vite). Tách rời qua API key.",
+  "scripts": {
+    "setup": "npm --prefix backend install && npm --prefix frontend install",
+    "backend": "npm --prefix backend run dev",
+    "frontend": "npm --prefix frontend run dev",
+    "dev": "concurrently -n backend,frontend -c blue,green \"npm run backend\" \"npm run frontend\"",
+    "build": "npm --prefix backend run build && npm --prefix frontend run build",
+    "start": "npm --prefix backend run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

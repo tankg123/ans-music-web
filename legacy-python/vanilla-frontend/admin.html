@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANS Music — Quản trị</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/admin.css?v=2.1.0">
+</head>
+<body>
+
+<!-- Màn hình chờ xác thực — chưa đăng nhập sẽ được chuyển sang /admin/login -->
+<div id="auth-checking">
+  <img src="/static/img/logo.svg" width="46" height="46" alt="">
+  <div class="spin"></div>
+  <p>Đang xác thực phiên quản trị…</p>
+</div>
+
+<!-- Giao diện chính -->
+<div id="admin-app" hidden>
+  <aside id="a-sidebar">
+    <a class="brand" href="/admin" id="a-brand">
+      <img src="/static/img/logo.svg" width="30" height="30" alt="">
+      <span>ANS <b>Admin</b></span>
+    </a>
+    <nav id="a-nav">
+      <button data-sec="dashboard" class="active">📊 Tổng quan</button>
+      <div class="nav-group-label">Nội dung</div>
+      <button data-sec="products" class="nav-accent">📦 Products</button>
+      <button data-sec="tracks">🎵 Bài hát</button>
+      <button data-sec="artists">🎤 Nghệ sĩ</button>
+      <button data-sec="labels">🏷 Labels</button>
+      <div class="nav-group-label">Phát hành</div>
+      <button data-sec="review">✅ Hàng chờ duyệt <span class="pill" id="pill-review"></span></button>
+      <button data-sec="idpool">🔢 Kho mã UPC/ISRC</button>
+      <button data-sec="ddex">📦 DDEX Ingestion</button>
+      <button data-sec="partners">🤝 Đối tác</button>
+      <button data-sec="distributions">🛰 Distributions</button>
+      <div class="nav-group-label">Hệ thống</div>
+      <button data-sec="users">👥 Tài khoản</button>
+      <button data-sec="settings">⚙ Cài đặt thương hiệu</button>
+    </nav>
+    <div class="sidebar-footer">
+      <!-- Ai đang đăng nhập: email — role (JS điền trong applyRoleNav) -->
+      <div class="sf-user" id="sf-user"></div>
+      <a href="/" target="_blank">↗ Mở web nghe nhạc</a>
+      <button id="btn-logout">Đăng xuất</button>
+    </div>
+  </aside>
+  <main id="a-main"></main>
+</div>
+
+<div id="modal-root"></div>
+<div id="toast-root"></div>
+<!-- Widget tiến độ upload (góc dưới phải) — quản lý bởi uploadTray trong admin.js -->
+<div id="upload-tray"></div>
+
+<script type="module" src="/static/js/admin.js?v=2.1.0"></script>
+</body>
+</html>
